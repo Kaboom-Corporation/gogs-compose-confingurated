@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+ web:
+  image: gogs/gogs
+  ports:
+    - 3080:3000
+    - 3022:22
+  volumes:
+    - ./git:/data/git
+    - ./etc/app.ini:/data/gogs/conf/app.ini
+  
+ db:
+  image: mysql:5.7.19
+  volumes:
+    - ./data:/var/lib/mysql
+  environment:
+   - MYSQL_DATABASE=gogs
+   - MYSQL_USER=gogs
+   - MYSQL_PASSWORD=gogs
+   #- MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD-secret}
+   - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
